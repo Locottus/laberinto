@@ -6,6 +6,8 @@ struct celda
 {
     int id;
     int apertura;
+    int x;
+    int y;
     char *aperturas;
 } ;
 
@@ -29,6 +31,8 @@ void inicializar()
         for (int j = 0; j < columnas; j++)
         {
             laberinto[i][j].id = 0;
+            laberinto[i][j].x = j;
+            laberinto[i][j].y = i;
             laberinto[i][j].apertura = 0;
             laberinto[i][j].aperturas = (char *)malloc((4) * sizeof(char));
             for (int k = 0; k < 4; k++)
@@ -173,6 +177,8 @@ struct celda obtenerValores(int id){
     struct celda encontrado;
     encontrado.id = 0;
     encontrado.apertura = 0;
+    encontrado.x = 0;
+    encontrado.y = 0;
     encontrado.aperturas = "0000";
     for (int i = 0; i < filas; i++)
     {
@@ -180,6 +186,8 @@ struct celda obtenerValores(int id){
         {
             if (laberinto[i][j].id == id)
             {
+                printf("%d:",laberinto[i][j].id);
+                printf("%s ", laberinto[i][j].aperturas );   
                 encontrado = laberinto[i][j];
                 break;
             }
@@ -188,7 +196,7 @@ struct celda obtenerValores(int id){
     return encontrado;
 }
 
-void analizar(){
+void recorrerLaberinto(){
     int salio = 0;
     int regreso = 0;
     int terminado = 0;
@@ -207,14 +215,12 @@ int main(void)
     leeArchivo();
     cargarArchivo();
 
-
-
     print();
     printf("posicion inicio: %d  \n",inicio);
     printf("posicion fin: %d  \n",fin);
 
+    recorrerLaberinto();
 
-    analizar();
     /* free the memory we used for the buffer */
     free(buffer);
     return 0;
