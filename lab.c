@@ -22,6 +22,12 @@ FILE *infile;
 char *buffer;
 long numbytes;
 
+    struct celda siguiente;
+    struct celda arriba;
+    struct celda abajo;
+    struct celda anterior;
+
+
 void inicializar()
 {
     // printf("Inicializando Laberinto!\n");
@@ -237,16 +243,19 @@ void recorrerLaberinto(){
     struct celda actual = obtenerValores(inicio);
     printf("%d ",actual.id);
 
-    struct celda siguiente;
-    struct celda arriba;
-    struct celda abajo;
-    struct celda anterior;
+    int terminado = 0;
+    int found = 0;
     printf("\n");
-    
+    int c = 0;
     int x = buscaX(actual.id);
     int y = buscaY(actual.id);
-    //while (terminado == 0)
+    while (c < 3)
     {
+        c++;
+        //actual = obtenerValores(inicio);
+        x = buscaX(actual.id);
+        y = buscaY(actual.id);
+        found = 0;
         if (x > 0){
             //obtengo anterior
             anterior = laberinto[x ][y -1];
@@ -290,58 +299,63 @@ void recorrerLaberinto(){
         // revisar A
         if ((existeLiteral(actual.aperturas, 'A') == 1) && (anterior.id != 0))
         {
-            if (existeLiteral(anterior.aperturas, 'C') == 1)
+            if (existeLiteral(anterior.aperturas, 'C') == 1 && found ==0)
             {
                 printf("%s\n", "actual->anterior");
-                actual = anterior;
+                actual = obtenerValores(anterior.id);
+                found = 1;
             }
-        }/*else{
+        }else{
             printf("%s\n", "no hay camino de actual a anterior");
-        }*/
+        }
 
         // revisar B
-        else if ((existeLiteral(actual.aperturas, 'B') == 1) && (arriba.id != 0))
+        if ((existeLiteral(actual.aperturas, 'B') == 1) && (arriba.id != 0))
         {
-            if (existeLiteral(arriba.aperturas, 'D') == 1)
+            if (existeLiteral(arriba.aperturas, 'D') == 1 && found ==0)
             {
                 printf("%s\n", "actual->actual");
-                actual = arriba;
+                actual = obtenerValores(arriba.id);
+                found = 1;
             }
-        }/*else{
+        }else{
             printf("%s\n", "no hay camino de actual a arriba");
-        }*/
+        }
 
         // revisar C
-        else if ((existeLiteral(actual.aperturas, 'C') == 1) && (siguiente.id != 0))
+        if ((existeLiteral(actual.aperturas, 'C') == 1) && (siguiente.id != 0))
         {
             printf("%s ", "actual->siguiente");
-            if (existeLiteral(siguiente.aperturas, 'A') == 1)
+            if (existeLiteral(siguiente.aperturas, 'A') == 1 && found ==0)
             {
                 printf("%d \n", siguiente.id);
-                actual = siguiente;
+                actual = obtenerValores(siguiente.id);
+                found = 1;
             }
-        }/*else{
+        }else{
             printf("%s\n", "no hay camino de actual a siguiente");
-        }*/
+        }
 
         // revisar D
-        else if ((existeLiteral(actual.aperturas, 'D') == 1) && (abajo.id != 0))
+        if ((existeLiteral(actual.aperturas, 'D') == 1) && (abajo.id != 0))
         {
-            if (existeLiteral(abajo.aperturas, 'B') == 1)
+            if (existeLiteral(abajo.aperturas, 'B') == 1 && found ==0)
             {
                 printf("%s\n", "actual->abajo");
-                actual = abajo;
+                actual = obtenerValores(abajo.id);
+                found = 1;
             }
         }else{
             printf("%s\n", "no hay camino de actual a abajo");
         }
         
-        
-        /*else{
-            //no hay camino
-            printf("%s\n", "fin");
+        if ((existeLiteral(actual.aperturas, 'A') == 0) &&
+            (existeLiteral(actual.aperturas, 'B') == 0) &&
+            (existeLiteral(actual.aperturas, 'C') == 0) &&
+            (existeLiteral(actual.aperturas, 'D') == 0))
+        {
             terminado = 1;
-        }*/
+        }
 
     }
 }
