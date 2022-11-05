@@ -13,8 +13,8 @@ struct celda
 
 struct celda laberinto[10][10];
 
-struct celda inicio; 
-struct celda fin;
+int inicio; 
+int fin;
 // todo inicializado a valores maximos, despues de delimita
 // a lo que el archivo dice
 int filas = 10;
@@ -136,11 +136,11 @@ void cargaDatos(int posicion, char str[])
 
             //INICIO
             if (posicion == 2){
-                inicio = obtenerValores(atoi(id));
+                inicio = atoi(id);
             }
             //FIN
             if (posicion == 3){
-                fin = obtenerValores(atoi(id));
+                fin = atoi(id);
             }
         }
 
@@ -196,11 +196,22 @@ struct celda obtenerValores(int id){
     return encontrado;
 }
 
+int existeLiteral(char *s, char car){
+    int existe = 0;
+    for (int i = 0; i < strlen(s); i++){
+        if (s[i] == car)
+            existe = 1;
+    }
+    return existe;
+}
+
+
 void recorrerLaberinto(){
     int salio = 0;
     int regreso = 0;
     int terminado = 0;
-    struct celda actual = obtenerValores(inicio.id);
+    int hayCamino = 1;
+    struct celda actual = obtenerValores(inicio);
     struct celda siguiente;
     struct celda arriba;
     struct celda abajo;
@@ -233,6 +244,20 @@ void recorrerLaberinto(){
             abajo.id = 0;
         }
 
+        //revisar A
+        if ( (existeLiteral(actual.aperturas,'A')==1) && (anterior.id != 0) ){
+            if (existeLiteral(anterior.aperturas,'C')==1){
+                actual = anterior;
+            }
+        }
+
+        //revisar B
+        //revisar C
+        //revisar D
+        
+        
+        
+        terminado = 1;
     }
 }
 
@@ -243,8 +268,8 @@ int main(void)
     cargarArchivo();
 
     print();
-    printf("posicion inicio: %d  \n",inicio.id);
-    printf("posicion fin: %d  \n",fin.id);
+    printf("posicion inicio: %d  \n",inicio);
+    printf("posicion fin: %d  \n",fin);
 
     recorrerLaberinto();
 
