@@ -6,8 +6,6 @@ struct celda
 {
     int id;
     int apertura;
-    int x;
-    int y;
     char *aperturas;
 } ;
 
@@ -31,8 +29,6 @@ void inicializar()
         for (int j = 0; j < columnas; j++)
         {
             laberinto[i][j].id = 0;
-            laberinto[i][j].x = j;
-            laberinto[i][j].y = i;
             laberinto[i][j].apertura = 0;
             laberinto[i][j].aperturas = (char *)malloc((4) * sizeof(char));
             for (int k = 0; k < 4; k++)
@@ -177,8 +173,6 @@ struct celda obtenerValores(int id){
     struct celda encontrado;
     encontrado.id = 0;
     encontrado.apertura = 0;
-    encontrado.x = 0;
-    encontrado.y = 0;
     encontrado.aperturas = "0000";
     for (int i = 0; i < filas; i++)
     {
@@ -205,61 +199,40 @@ int existeLiteral(char *s, char car){
     return existe;
 }
 
-
-void recorrerLaberinto(){
-    int salio = 0;
-    int regreso = 0;
-    int terminado = 0;
-    int hayCamino = 1;
-    struct celda actual = obtenerValores(inicio);
-    struct celda siguiente;
-    struct celda arriba;
-    struct celda abajo;
-    struct celda anterior;
-    
-    while (terminado == 0)
+int buscaX(int id){
+    int x = 0;
+    for (int i = 0; i < filas; i++)
     {
-        if (actual.x > 0){
-            //obtengo anterior
-            anterior = laberinto[actual.x - 1][actual.y];
-        }else{
-            anterior.id = 0;
-        }
-        if (actual.y > 0){
-            //obtengo arriba
-            arriba = laberinto[actual.x][actual.y - 1];
-        }else{
-            arriba.id = 0;
-        }
-        if (actual.x < filas){
-            //obtengo siguiente
-            siguiente = laberinto[actual.x + 1][actual.y];
-        }else{
-            siguiente.id = 0;
-        }
-        if (actual.y < columnas){
-            //obtengo abajo
-            abajo = laberinto[actual.x ][actual.y + 1];
-        }else{
-            abajo.id = 0;
-        }
-
-        //revisar A
-        if ( (existeLiteral(actual.aperturas,'A')==1) && (anterior.id != 0) ){
-            if (existeLiteral(anterior.aperturas,'C')==1){
-                actual = anterior;
+        for (int j = 0; j < columnas; j++)
+        {
+            if (laberinto[i][j].id == id)
+            {
+                x = i;
+                //printf("%d \n",x);
+                break;
             }
         }
-
-        //revisar B
-        //revisar C
-        //revisar D
-        
-        
-        
-        terminado = 1;
     }
+    return x;
 }
+
+int buscaY(int id){
+    int y = 0;
+    for (int i = 0; i < filas; i++)
+    {
+        for (int j = 0; j < columnas; j++)
+        {
+            if (laberinto[i][j].id == id)
+            {
+                y = j;
+                //printf("%d \n",y);
+                break;
+            }
+        }
+    }
+    return y;
+}
+
 
 int main(void)
 {
@@ -270,8 +243,7 @@ int main(void)
     print();
     printf("posicion inicio: %d  \n",inicio);
     printf("posicion fin: %d  \n",fin);
-
-    recorrerLaberinto();
+    //recorrerLaberinto();
 
     /* free the memory we used for the buffer */
     free(buffer);
