@@ -13,8 +13,8 @@ struct celda
 
 struct celda laberinto[10][10];
 
-int inicio = 0; 
-int fin = 0;
+struct celda inicio; 
+struct celda fin;
 // todo inicializado a valores maximos, despues de delimita
 // a lo que el archivo dice
 int filas = 10;
@@ -136,11 +136,11 @@ void cargaDatos(int posicion, char str[])
 
             //INICIO
             if (posicion == 2){
-                inicio = atoi(id);
+                inicio = obtenerValores(atoi(id));
             }
             //FIN
             if (posicion == 3){
-                fin = atoi(id);
+                fin = obtenerValores(atoi(id));
             }
         }
 
@@ -200,11 +200,38 @@ void recorrerLaberinto(){
     int salio = 0;
     int regreso = 0;
     int terminado = 0;
-    struct celda actual = obtenerValores(inicio);
-    struct celda siguiente = obtenerValores(inicio + 1);
+    struct celda actual = obtenerValores(inicio.id);
+    struct celda siguiente;
+    struct celda arriba;
+    struct celda abajo;
+    struct celda anterior;
     
-    //while (terminado == 0)
+    while (terminado == 0)
     {
+        if (actual.x > 0){
+            //obtengo anterior
+            anterior = laberinto[actual.x - 1][actual.y];
+        }else{
+            anterior.id = 0;
+        }
+        if (actual.y > 0){
+            //obtengo arriba
+            arriba = laberinto[actual.x][actual.y - 1];
+        }else{
+            arriba.id = 0;
+        }
+        if (actual.x < filas){
+            //obtengo siguiente
+            siguiente = laberinto[actual.x + 1][actual.y];
+        }else{
+            siguiente.id = 0;
+        }
+        if (actual.y < columnas){
+            //obtengo abajo
+            abajo = laberinto[actual.x ][actual.y + 1];
+        }else{
+            abajo.id = 0;
+        }
 
     }
 }
@@ -216,8 +243,8 @@ int main(void)
     cargarArchivo();
 
     print();
-    printf("posicion inicio: %d  \n",inicio);
-    printf("posicion fin: %d  \n",fin);
+    printf("posicion inicio: %d  \n",inicio.id);
+    printf("posicion fin: %d  \n",fin.id);
 
     recorrerLaberinto();
 
