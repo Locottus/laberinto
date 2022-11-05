@@ -295,24 +295,24 @@ void recorrerLaberinto(){
                 printf("%s\n", "actual->anterior");
                 actual = anterior;
             }
-        }else{
+        }/*else{
             printf("%s\n", "no hay camino de actual a anterior");
-        }
+        }*/
 
         // revisar B
-        if ((existeLiteral(actual.aperturas, 'B') == 1) && (arriba.id != 0))
+        else if ((existeLiteral(actual.aperturas, 'B') == 1) && (arriba.id != 0))
         {
             if (existeLiteral(arriba.aperturas, 'D') == 1)
             {
                 printf("%s\n", "actual->actual");
                 actual = arriba;
             }
-        }else{
+        }/*else{
             printf("%s\n", "no hay camino de actual a arriba");
-        }
+        }*/
 
         // revisar C
-        if ((existeLiteral(actual.aperturas, 'C') == 1) && (siguiente.id != 0))
+        else if ((existeLiteral(actual.aperturas, 'C') == 1) && (siguiente.id != 0))
         {
             printf("%s ", "actual->siguiente");
             if (existeLiteral(siguiente.aperturas, 'A') == 1)
@@ -320,12 +320,12 @@ void recorrerLaberinto(){
                 printf("%d \n", siguiente.id);
                 actual = siguiente;
             }
-        }else{
+        }/*else{
             printf("%s\n", "no hay camino de actual a siguiente");
-        }
+        }*/
 
         // revisar D
-        if ((existeLiteral(actual.aperturas, 'D') == 1) && (abajo.id != 0))
+        else if ((existeLiteral(actual.aperturas, 'D') == 1) && (abajo.id != 0))
         {
             if (existeLiteral(abajo.aperturas, 'B') == 1)
             {
