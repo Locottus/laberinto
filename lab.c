@@ -22,6 +22,8 @@ int columnas = 10;
 int f = 0;
 int c = 0;
 
+int salida = 0;
+
 FILE *infile;
 char *buffer;
 long numbytes;
@@ -76,15 +78,6 @@ void leeArchivo()
             // printf("The file called test.dat contains this text\n\n%s", buffer);
         }
     }
-}
-
-void escribeArchivo()
-{
-    FILE *fp;
-    fp = fopen("Salida_Laberinto.txt", "w+");
-    fprintf(fp, "This is testing for fprintf...\n");
-    fputs("This is testing for fputs...\n", fp);
-    fclose(fp);
 }
 
 void cargaDatos(int posicion, char str[])
@@ -314,7 +307,7 @@ void recorrerLaberinto()
     struct celda actual = obtenerValores(inicio);
     yaRecorrida(inicio);
     int c = 0; // FIX TO FINISH CONDITION
-    int salida = 0;
+    
     while (c < filas * columnas && salida == 0)
     {
         adyacentes(actual.id);
@@ -366,20 +359,42 @@ void recorrerLaberinto()
 
         if (fin == actual.id){
             salida = 1;
-            printf("%s\n", "**********SALI!!!!!!!!!!!**********");
+            printf("%s\n", "salida exitosa");
         }
             
         c++;
     }
 
      if (salida == 0){
-            printf("%s\n", "**********NO HAY SALIDA!!!!!!!!!!!**********");
+            printf("%s\n", "salida inaccesible");
         }
 }
 
-void imprimirArchivoSalida(){
-    //TODO
+void escribeArchivo()
+{
+    FILE *fp;
+    fp = fopen("Salida_Laberinto.txt", "w+");
+    //fputs("This is testing for fputs...\n", fp);
+    char snum[5];
+    for (int i = 0; i < filas; i++)
+    {
+        for (int j = 0; j < columnas; j++)
+        {
+            //TODO
+            //printf("%d:", laberinto[i][j].id);
+            //printf("%s ", laberinto[i][j].aperturas);
+            //fprintf(fp, itoa(laberinto[i][j].id,snum,10) );
+            //fprintf(fp, " ");
+        }
+    }
+    if (salida == 0)
+        fprintf(fp, "Salida Inaccesible\n");
+    if (salida == 1)
+        fprintf(fp, "Salida Exitosa\n");
+
+    fclose(fp);
 }
+
 
 int main(void)
 {
@@ -391,7 +406,8 @@ int main(void)
     printf("posicion inicio: %d  \n", inicio);
     printf("posicion fin: %d  \n", fin);
     recorrerLaberinto();
-    imprimirArchivoSalida();
+
+    escribeArchivo();
     /* free the memory we used for the buffer */
     free(buffer);
     return 0;
