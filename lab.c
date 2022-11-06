@@ -33,7 +33,6 @@ struct celda anterior;
 
 void inicializar()
 {
-    // printf("Inicializando Laberinto!\n");
     for (int i = 0; i < filas; i++)
         for (int j = 0; j < columnas; j++)
         {
@@ -251,43 +250,6 @@ void yaRecorrida(int id)
     }
 }
 
-
-int buscaX(int id)
-{
-    int x = 0;
-    for (int i = 0; i < filas; i++)
-    {
-        for (int j = 0; j < columnas; j++)
-        {
-            if (laberinto[i][j].id == id)
-            {
-                x = i;
-                // printf("%d \n",x);
-                break;
-            }
-        }
-    }
-    return x;
-}
-
-int buscaY(int id)
-{
-    int y = 0;
-    for (int i = 0; i < filas; i++)
-    {
-        for (int j = 0; j < columnas; j++)
-        {
-            if (laberinto[i][j].id == id)
-            {
-                y = j;
-                // printf("%d \n",y);
-                break;
-            }
-        }
-    }
-    return y;
-}
-
 void adyacentes(int actual)
 {
     printf("actual%d\n", actual);
@@ -353,11 +315,10 @@ void recorrerLaberinto()
     yaRecorrida(inicio);
     int c = 0; // FIX TO FINISH CONDITION
     int salida = 0;
-    while (c < 50 && salida == 0)
+    while (c < filas * columnas && salida == 0)
     {
         adyacentes(actual.id);
 
-        // TODO MOVE ACTUAL TO NEXT
         // revisar A
         if ((existeLiteral(actual.aperturas, 'A') == 1) && (anterior.id != 0))
         {
@@ -368,7 +329,6 @@ void recorrerLaberinto()
                 actual = obtenerValores(anterior.id);
             }
         }
-        
 
         // revisar B
         if ((existeLiteral(actual.aperturas, 'B') == 1) && (arriba.id != 0))
@@ -381,7 +341,6 @@ void recorrerLaberinto()
             }
         }
        
-
         // revisar C
         if ((existeLiteral(actual.aperturas, 'C') == 1) && (siguiente.id != 0))
         {
@@ -393,7 +352,6 @@ void recorrerLaberinto()
                 actual = obtenerValores(siguiente.id);
             }
         }
-        
 
         // revisar D
         if ((existeLiteral(actual.aperturas, 'D') == 1) && (abajo.id != 0))
@@ -419,6 +377,10 @@ void recorrerLaberinto()
         }
 }
 
+void imprimirArchivoSalida(){
+    //TODO
+}
+
 int main(void)
 {
     inicializar();
@@ -429,7 +391,7 @@ int main(void)
     printf("posicion inicio: %d  \n", inicio);
     printf("posicion fin: %d  \n", fin);
     recorrerLaberinto();
-
+    imprimirArchivoSalida();
     /* free the memory we used for the buffer */
     free(buffer);
     return 0;
