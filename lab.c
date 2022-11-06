@@ -319,13 +319,17 @@ void adyacentes(int actual){
 
 void recorrerLaberinto(){
 
-   adyacentes(14);
-   adyacentes(15);
-   adyacentes(35);
-    adyacentes(30);
-   /*for (int i = 0; i < filas * columnas; i++){
-    buscaFC(i + 1);
-   }*/
+
+    int actual = inicio;
+    int c = 0;// FIX TO FINISH CONDITION
+    while (c < 5){
+        adyacentes(actual);
+        //TODO MOVE ACTUAL TO NEXT
+
+        c++;
+    }
+   
+ 
  
 }
 
