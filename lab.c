@@ -12,8 +12,7 @@ struct celda
 
 struct celda laberinto[10][10];
 
-    FILE *fp;
-
+FILE *fp;
 
 int inicio;
 int fin;
@@ -317,13 +316,12 @@ void recorrerLaberinto()
         // revisar A
         if ((existeLiteral(actual.aperturas, 'A') == 1) && (anterior.id != 0))
         {
-            if (existeLiteral(anterior.aperturas, 'C') == 1 && anterior.recorrido == 0 )
+            if (existeLiteral(anterior.aperturas, 'C') == 1 && anterior.recorrido == 0)
             {
                 printf("%s\n", "actual->anterior");
                 yaRecorrida(anterior.id);
                 actual = obtenerValores(anterior.id);
-                fprintf(fp,"%02dC " , anterior.id);
-
+                fprintf(fp, "%02dC ", anterior.id);
             }
         }
 
@@ -335,10 +333,10 @@ void recorrerLaberinto()
                 printf("%s\n", "actual->arriba");
                 yaRecorrida(arriba.id);
                 actual = obtenerValores(arriba.id);
-                fprintf(fp,"%02dD " , arriba.id);
+                fprintf(fp, "%02dD ", arriba.id);
             }
         }
-       
+
         // revisar C
         if ((existeLiteral(actual.aperturas, 'C') == 1) && (siguiente.id != 0))
         {
@@ -348,8 +346,7 @@ void recorrerLaberinto()
                 printf("%d \n", siguiente.id);
                 yaRecorrida(siguiente.id);
                 actual = obtenerValores(siguiente.id);
-                fprintf(fp,"%02dA " , siguiente.id);
-
+                fprintf(fp, "%02dA ", siguiente.id);
             }
         }
 
@@ -361,36 +358,36 @@ void recorrerLaberinto()
                 printf("%s\n", "actual->abajo");
                 yaRecorrida(abajo.id);
                 actual = obtenerValores(abajo.id);
-                fprintf(fp,"%02dB " , abajo.id);
+                fprintf(fp, "%02dB ", abajo.id);
             }
         }
 
-        if (fin == actual.id){
+        if (fin == actual.id)
+        {
             salida = 1;
             printf("%s\n", "salida exitosa");
-            fprintf(fp, "\nSalida Exitosa\n");            
+            fprintf(fp, "\nSalida Exitosa\n");
         }
 
         contador++;
     }
 
-     if (salida == 0){
-            printf("%s\n", "salida inaccesible");
-            fprintf(fp, "\nSalida Inaccesible\n");
- 
-        }
+    if (salida == 0)
+    {
+        printf("%s\n", "salida inaccesible");
+        fprintf(fp, "\nSalida Inaccesible\n");
+    }
 }
 
 void escribeArchivo()
 {
-    //fputs("This is testing for fputs...\n", fp);
-    //fprintf(fp, "fprintf file example \n");
+    // fputs("This is testing for fputs...\n", fp);
+    // fprintf(fp, "fprintf file example \n");
 }
-
 
 int main(void)
 {
-    //file open
+    // file open
     fp = fopen("Salida_Laberinto.txt", "w+");
 
     inicializar();
@@ -404,8 +401,8 @@ int main(void)
 
     /* free the memory we used for the buffer */
     free(buffer);
-   
-    //file close
+
+    // file close
     fclose(fp);
 
     return 0;
