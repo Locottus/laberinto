@@ -351,10 +351,9 @@ void recorrerLaberinto()
 {
     struct celda actual = obtenerValores(inicio);
     yaRecorrida(inicio);
-    //int actual = inicio;
-    //int found = 0;
     int c = 0; // FIX TO FINISH CONDITION
-    while (c < 5)
+    int salida = 0;
+    while (c < 50 && salida == 0)
     {
         adyacentes(actual.id);
 
@@ -367,7 +366,6 @@ void recorrerLaberinto()
                 printf("%s\n", "actual->anterior");
                 yaRecorrida(anterior.id);
                 actual = obtenerValores(anterior.id);
-
             }
         }
         
@@ -380,7 +378,6 @@ void recorrerLaberinto()
                 printf("%s\n", "actual->arriba");
                 yaRecorrida(arriba.id);
                 actual = obtenerValores(arriba.id);
-                
             }
         }
        
@@ -394,7 +391,6 @@ void recorrerLaberinto()
                 printf("%d \n", siguiente.id);
                 yaRecorrida(siguiente.id);
                 actual = obtenerValores(siguiente.id);
-                
             }
         }
         
@@ -407,12 +403,20 @@ void recorrerLaberinto()
                 printf("%s\n", "actual->abajo");
                 yaRecorrida(abajo.id);
                 actual = obtenerValores(abajo.id);
-                
             }
         }
-        
+
+        if (fin == actual.id){
+            salida = 1;
+            printf("%s\n", "**********SALI!!!!!!!!!!!**********");
+        }
+            
         c++;
     }
+
+     if (salida == 0){
+            printf("%s\n", "**********NO HAY SALIDA!!!!!!!!!!!**********");
+        }
 }
 
 int main(void)
