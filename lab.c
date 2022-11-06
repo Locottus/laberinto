@@ -18,6 +18,9 @@ int fin;
 int filas = 10;
 int columnas = 10;
 
+int f = 0;
+int c = 0;
+
 FILE *infile;
 char *buffer;
 long numbytes;
@@ -205,6 +208,29 @@ int existeLiteral(char *s, char car){
     return existe;
 }
 
+void buscaFC(int id){
+    int ff = 0;
+    int cc = 0;
+    for (int i = 0; i < filas; i++)
+    {
+        ff = i + 1;
+        for (int j = 0; j < columnas; j++)
+        {
+            cc = j + 1;
+            if (laberinto[i][j].id == id)
+            {
+                f = ff;
+                c = cc;
+                /*printf("id : %d ", id);
+                printf("filas: %d ", f);
+                printf("columnas: %d\n", c);*/
+                break;
+            }
+        }
+    }
+}
+
+
 int buscaX(int id){
     int x = 0;
     for (int i = 0; i < filas; i++)
@@ -239,125 +265,68 @@ int buscaY(int id){
     return y;
 }
 
-void recorrerLaberinto(){
-    struct celda actual = obtenerValores(inicio);
-    printf("%d ",actual.id);
+void adyacentes(int actual){
+        printf("actual%d\n",actual);
+        buscaFC(actual);
+        int fa = f;
+        int ca = c;
 
-    int terminado = 0;
-    int found = 0;
-    printf("\n");
-    int c = 0;
-    int x = buscaX(actual.id);
-    int y = buscaY(actual.id);
-    while (c < 3)
-    {
-        c++;
-        //actual = obtenerValores(inicio);
-        x = buscaX(actual.id);
-        y = buscaY(actual.id);
-        found = 0;
-        if (x > 0){
-            //obtengo anterior
-            anterior = laberinto[x ][y -1];
-            printf("%s ", "obtengo anterior");
-            printf("%d\n",anterior.id);
-        }else{
-            printf("%s\n", "no hay anterior");
-            anterior.id = 0;
+        //obtengo anterior
+        int ant = actual -1;
+        anterior.id = 0;
+        if (ant > 0){
+            buscaFC(ant);
+            int fant = f;
+            int cant = c;
+            if (fa == fant){
+                anterior = obtenerValores(ant);
+                printf("%s ", "obtengo anterior");
+                printf("%d\n",anterior.id);
+            }
         }
-        if (y > 0){
-            //obtengo arriba
-            arriba = laberinto[x -1][y ];
+        //obtengo arriba
+        int arr = actual - filas - 1;
+        arriba.id = 0;
+        if (arr > 0){
+            arriba = obtenerValores(arr);
             printf("%s ", "obtengo arriba");
             printf("%d\n",arriba.id);
-
-        }else{
-            printf("%s\n", "no hay arriba");
-            arriba.id = 0;
         }
-        if (x < filas){
-            //obtengo siguiente
-            siguiente = laberinto[x][y + 1];
-            printf("%s ", "obtengo siguiente");
-            printf("%d\n",siguiente.id);
 
-        }else{
-            printf("%s\n", "no hay siguiente");
-            siguiente.id = 0;
+        //obtengo siguiente
+        int sig = actual + 1;
+        siguiente.id = 0;
+        if (sig <= filas * columnas){
+            buscaFC(sig);
+            int fsig = f;
+            int csig = c;
+            if (fa == fsig){
+                siguiente = obtenerValores(sig);
+                printf("%s ", "obtengo siguiente");
+                printf("%d\n",siguiente.id);
+            }
         }
-        if (y < columnas){
-            //obtengo abajo
-            abajo = laberinto[x + 1 ][y];
+
+        //obtengo abajo
+        int ab = actual + filas + 1;
+        abajo.id = 0;        
+        if (ab <= filas * columnas){
+            abajo = obtenerValores(ab);
             printf("%s ", "obtengo abajo");
             printf("%d\n",abajo.id);
-
-        }else{
-            printf("%s\n", "no hay abajo");
-            abajo.id = 0;
         }
+}
 
-        // revisar A
-        if ((existeLiteral(actual.aperturas, 'A') == 1) && (anterior.id != 0))
-        {
-            if (existeLiteral(anterior.aperturas, 'C') == 1 && found ==0)
-            {
-                printf("%s\n", "actual->anterior");
-                actual = obtenerValores(anterior.id);
-                found = 1;
-            }
-        }else{
-            printf("%s\n", "no hay camino de actual a anterior");
-        }
+void recorrerLaberinto(){
 
-        // revisar B
-        if ((existeLiteral(actual.aperturas, 'B') == 1) && (arriba.id != 0))
-        {
-            if (existeLiteral(arriba.aperturas, 'D') == 1 && found ==0)
-            {
-                printf("%s\n", "actual->actual");
-                actual = obtenerValores(arriba.id);
-                found = 1;
-            }
-        }else{
-            printf("%s\n", "no hay camino de actual a arriba");
-        }
-
-        // revisar C
-        if ((existeLiteral(actual.aperturas, 'C') == 1) && (siguiente.id != 0))
-        {
-            printf("%s ", "actual->siguiente");
-            if (existeLiteral(siguiente.aperturas, 'A') == 1 && found ==0)
-            {
-                printf("%d \n", siguiente.id);
-                actual = obtenerValores(siguiente.id);
-                found = 1;
-            }
-        }else{
-            printf("%s\n", "no hay camino de actual a siguiente");
-        }
-
-        // revisar D
-        if ((existeLiteral(actual.aperturas, 'D') == 1) && (abajo.id != 0))
-        {
-            if (existeLiteral(abajo.aperturas, 'B') == 1 && found ==0)
-            {
-                printf("%s\n", "actual->abajo");
-                actual = obtenerValores(abajo.id);
-                found = 1;
-            }
-        }else{
-            printf("%s\n", "no hay camino de actual a abajo");
-        }
-        
-        if ((existeLiteral(actual.aperturas, 'A') == 0) &&
-            (existeLiteral(actual.aperturas, 'B') == 0) &&
-            (existeLiteral(actual.aperturas, 'C') == 0) &&
-            (existeLiteral(actual.aperturas, 'D') == 0))
-        {
-            terminado = 1;
-        }
-
-    }
+   adyacentes(14);
+   adyacentes(15);
+   adyacentes(35);
+    adyacentes(30);
+   /*for (int i = 0; i < filas * columnas; i++){
+    buscaFC(i + 1);
+   }*/
+ 
 }
 
 int main(void)
