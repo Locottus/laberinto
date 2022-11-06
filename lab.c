@@ -322,7 +322,7 @@ void recorrerLaberinto()
                 printf("%s\n", "actual->anterior");
                 yaRecorrida(anterior.id);
                 actual = obtenerValores(anterior.id);
-                fprintf(fp,"%dC " , anterior.id);
+                fprintf(fp,"%02dC " , anterior.id);
 
             }
         }
@@ -335,7 +335,7 @@ void recorrerLaberinto()
                 printf("%s\n", "actual->arriba");
                 yaRecorrida(arriba.id);
                 actual = obtenerValores(arriba.id);
-                fprintf(fp,"%dD " , arriba.id);
+                fprintf(fp,"%02dD " , arriba.id);
             }
         }
        
@@ -348,7 +348,7 @@ void recorrerLaberinto()
                 printf("%d \n", siguiente.id);
                 yaRecorrida(siguiente.id);
                 actual = obtenerValores(siguiente.id);
-                fprintf(fp,"%dA " , siguiente.id);
+                fprintf(fp,"%02dA " , siguiente.id);
 
             }
         }
@@ -361,7 +361,7 @@ void recorrerLaberinto()
                 printf("%s\n", "actual->abajo");
                 yaRecorrida(abajo.id);
                 actual = obtenerValores(abajo.id);
-                fprintf(fp,"%dB " , abajo.id);
+                fprintf(fp,"%02dB " , abajo.id);
             }
         }
 
@@ -404,7 +404,6 @@ int main(void)
 
     /* free the memory we used for the buffer */
     free(buffer);
-        
    
     //file close
     fclose(fp);
