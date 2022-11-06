@@ -6,6 +6,7 @@ struct celda
 {
     int id;
     int apertura;
+    int recorrido;
     char *aperturas;
 };
 
@@ -38,6 +39,7 @@ void inicializar()
         {
             laberinto[i][j].id = 0;
             laberinto[i][j].apertura = 0;
+            laberinto[i][j].recorrido = 0;
             laberinto[i][j].aperturas = (char *)malloc((4) * sizeof(char));
             for (int k = 0; k < 4; k++)
             {
@@ -234,6 +236,22 @@ void buscaFC(int id)
     }
 }
 
+void yaRecorrida(int id)
+{
+    for (int i = 0; i < filas; i++)
+    {
+        for (int j = 0; j < columnas; j++)
+        {
+            if (laberinto[i][j].id == id)
+            {
+                laberinto[i][j].recorrido = 1;
+                break;
+            }
+        }
+    }
+}
+
+
 int buscaX(int id)
 {
     int x = 0;
@@ -331,14 +349,68 @@ void adyacentes(int actual)
 
 void recorrerLaberinto()
 {
-
-    int actual = inicio;
+    struct celda actual = obtenerValores(inicio);
+    yaRecorrida(inicio);
+    //int actual = inicio;
+    //int found = 0;
     int c = 0; // FIX TO FINISH CONDITION
     while (c < 5)
     {
-        adyacentes(actual);
-        // TODO MOVE ACTUAL TO NEXT
+        adyacentes(actual.id);
 
+        // TODO MOVE ACTUAL TO NEXT
+        // revisar A
+        if ((existeLiteral(actual.aperturas, 'A') == 1) && (anterior.id != 0))
+        {
+            if (existeLiteral(anterior.aperturas, 'C') == 1 && anterior.recorrido == 0 )
+            {
+                printf("%s\n", "actual->anterior");
+                yaRecorrida(anterior.id);
+                actual = obtenerValores(anterior.id);
+
+            }
+        }
+        
+
+        // revisar B
+        if ((existeLiteral(actual.aperturas, 'B') == 1) && (arriba.id != 0))
+        {
+            if (existeLiteral(arriba.aperturas, 'D') == 1 && arriba.recorrido == 0)
+            {
+                printf("%s\n", "actual->arriba");
+                yaRecorrida(arriba.id);
+                actual = obtenerValores(arriba.id);
+                
+            }
+        }
+       
+
+        // revisar C
+        if ((existeLiteral(actual.aperturas, 'C') == 1) && (siguiente.id != 0))
+        {
+            printf("%s ", "actual->siguiente");
+            if (existeLiteral(siguiente.aperturas, 'A') == 1 && siguiente.recorrido == 0)
+            {
+                printf("%d \n", siguiente.id);
+                yaRecorrida(siguiente.id);
+                actual = obtenerValores(siguiente.id);
+                
+            }
+        }
+        
+
+        // revisar D
+        if ((existeLiteral(actual.aperturas, 'D') == 1) && (abajo.id != 0))
+        {
+            if (existeLiteral(abajo.aperturas, 'B') == 1 && abajo.recorrido == 0)
+            {
+                printf("%s\n", "actual->abajo");
+                yaRecorrida(abajo.id);
+                actual = obtenerValores(abajo.id);
+                
+            }
+        }
+        
         c++;
     }
 }
