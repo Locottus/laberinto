@@ -7,11 +7,11 @@ struct celda
     int id;
     int apertura;
     char *aperturas;
-} ;
+};
 
 struct celda laberinto[10][10];
 
-int inicio; 
+int inicio;
 int fin;
 // todo inicializado a valores maximos, despues de delimita
 // a lo que el archivo dice
@@ -25,11 +25,10 @@ FILE *infile;
 char *buffer;
 long numbytes;
 
-    struct celda siguiente;
-    struct celda arriba;
-    struct celda abajo;
-    struct celda anterior;
-
+struct celda siguiente;
+struct celda arriba;
+struct celda abajo;
+struct celda anterior;
 
 void inicializar()
 {
@@ -139,16 +138,17 @@ void cargaDatos(int posicion, char str[])
                 }
             }
 
-            //INICIO
-            if (posicion == 2){
+            // INICIO
+            if (posicion == 2)
+            {
                 inicio = atoi(id);
             }
-            //FIN
-            if (posicion == 3){
+            // FIN
+            if (posicion == 3)
+            {
                 fin = atoi(id);
             }
         }
-
     }
 }
 
@@ -165,20 +165,21 @@ void cargarArchivo()
     }
 }
 
-void print(){
+void print()
+{
     for (int i = 0; i < filas; i++)
     {
         for (int j = 0; j < columnas; j++)
         {
-            printf("%d:",laberinto[i][j].id);
-            printf("%s ", laberinto[i][j].aperturas );            
+            printf("%d:", laberinto[i][j].id);
+            printf("%s ", laberinto[i][j].aperturas);
         }
-        printf("%s","\n");
+        printf("%s", "\n");
     }
 }
 
-
-struct celda obtenerValores(int id){
+struct celda obtenerValores(int id)
+{
     struct celda encontrado;
     encontrado.id = 0;
     encontrado.apertura = 0;
@@ -189,8 +190,8 @@ struct celda obtenerValores(int id){
         {
             if (laberinto[i][j].id == id)
             {
-                printf("%d:",laberinto[i][j].id);
-                printf("%s ", laberinto[i][j].aperturas );   
+                printf("%d:", laberinto[i][j].id);
+                printf("%s ", laberinto[i][j].aperturas);
                 encontrado = laberinto[i][j];
                 break;
             }
@@ -199,16 +200,19 @@ struct celda obtenerValores(int id){
     return encontrado;
 }
 
-int existeLiteral(char *s, char car){
+int existeLiteral(char *s, char car)
+{
     int existe = 0;
-    for (int i = 0; i < strlen(s); i++){
+    for (int i = 0; i < strlen(s); i++)
+    {
         if (s[i] == car)
             existe = 1;
     }
     return existe;
 }
 
-void buscaFC(int id){
+void buscaFC(int id)
+{
     int ff = 0;
     int cc = 0;
     for (int i = 0; i < filas; i++)
@@ -230,8 +234,8 @@ void buscaFC(int id){
     }
 }
 
-
-int buscaX(int id){
+int buscaX(int id)
+{
     int x = 0;
     for (int i = 0; i < filas; i++)
     {
@@ -240,7 +244,7 @@ int buscaX(int id){
             if (laberinto[i][j].id == id)
             {
                 x = i;
-                //printf("%d \n",x);
+                // printf("%d \n",x);
                 break;
             }
         }
@@ -248,7 +252,8 @@ int buscaX(int id){
     return x;
 }
 
-int buscaY(int id){
+int buscaY(int id)
+{
     int y = 0;
     for (int i = 0; i < filas; i++)
     {
@@ -257,7 +262,7 @@ int buscaY(int id){
             if (laberinto[i][j].id == id)
             {
                 y = j;
-                //printf("%d \n",y);
+                // printf("%d \n",y);
                 break;
             }
         }
@@ -265,72 +270,77 @@ int buscaY(int id){
     return y;
 }
 
-void adyacentes(int actual){
-        printf("actual%d\n",actual);
-        buscaFC(actual);
-        int fa = f;
-        int ca = c;
+void adyacentes(int actual)
+{
+    printf("actual%d\n", actual);
+    buscaFC(actual);
+    int fa = f;
+    // int ca = c;
 
-        //obtengo anterior
-        int ant = actual -1;
-        anterior.id = 0;
-        if (ant > 0){
-            buscaFC(ant);
-            int fant = f;
-            int cant = c;
-            if (fa == fant){
-                anterior = obtenerValores(ant);
-                printf("%s ", "obtengo anterior");
-                printf("%d\n",anterior.id);
-            }
+    // obtengo anterior
+    int ant = actual - 1;
+    anterior.id = 0;
+    if (ant > 0)
+    {
+        buscaFC(ant);
+        int fant = f;
+        // int cant = c;
+        if (fa == fant)
+        {
+            anterior = obtenerValores(ant);
+            printf("%s ", "obtengo anterior");
+            printf("%d\n", anterior.id);
         }
-        //obtengo arriba
-        int arr = actual - filas - 1;
-        arriba.id = 0;
-        if (arr > 0){
-            arriba = obtenerValores(arr);
-            printf("%s ", "obtengo arriba");
-            printf("%d\n",arriba.id);
-        }
+    }
+    // obtengo arriba
+    int arr = actual - filas - 1;
+    arriba.id = 0;
+    if (arr > 0)
+    {
+        arriba = obtenerValores(arr);
+        printf("%s ", "obtengo arriba");
+        printf("%d\n", arriba.id);
+    }
 
-        //obtengo siguiente
-        int sig = actual + 1;
-        siguiente.id = 0;
-        if (sig <= filas * columnas){
-            buscaFC(sig);
-            int fsig = f;
-            int csig = c;
-            if (fa == fsig){
-                siguiente = obtenerValores(sig);
-                printf("%s ", "obtengo siguiente");
-                printf("%d\n",siguiente.id);
-            }
+    // obtengo siguiente
+    int sig = actual + 1;
+    siguiente.id = 0;
+    if (sig <= filas * columnas)
+    {
+        buscaFC(sig);
+        int fsig = f;
+        // int csig = c;
+        if (fa == fsig)
+        {
+            siguiente = obtenerValores(sig);
+            printf("%s ", "obtengo siguiente");
+            printf("%d\n", siguiente.id);
         }
+    }
 
-        //obtengo abajo
-        int ab = actual + filas + 1;
-        abajo.id = 0;        
-        if (ab <= filas * columnas){
-            abajo = obtenerValores(ab);
-            printf("%s ", "obtengo abajo");
-            printf("%d\n",abajo.id);
-        }
+    // obtengo abajo
+    int ab = actual + filas + 1;
+    abajo.id = 0;
+    if (ab <= filas * columnas)
+    {
+        abajo = obtenerValores(ab);
+        printf("%s ", "obtengo abajo");
+        printf("%d\n", abajo.id);
+    }
 }
 
-void recorrerLaberinto(){
-
+void recorrerLaberinto()
+{
 
     int actual = inicio;
-    int c = 0;// FIX TO FINISH CONDITION
-    while (c < 5){
+    int c = 0; // FIX TO FINISH CONDITION
+    while (c < 5)
+    {
         adyacentes(actual);
-        //TODO MOVE ACTUAL TO NEXT
+        // TODO MOVE ACTUAL TO NEXT
 
         c++;
     }
-   
- 
- 
 }
 
 int main(void)
@@ -340,8 +350,8 @@ int main(void)
     cargarArchivo();
 
     print();
-    printf("posicion inicio: %d  \n",inicio);
-    printf("posicion fin: %d  \n",fin);
+    printf("posicion inicio: %d  \n", inicio);
+    printf("posicion fin: %d  \n", fin);
     recorrerLaberinto();
 
     /* free the memory we used for the buffer */
