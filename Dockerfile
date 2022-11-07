@@ -13,3 +13,6 @@ RUN apt-get install -y gcc-riscv64-linux-gnu
 #run compiler commands
 # gcc -Wall lab.c  -o lab
 # ./lab
+
+#https://github.com/riscv-collab/riscv-gnu-toolchain/issues/566
+#riscv64-linux-gnu-gcc lab.c -o risc-v

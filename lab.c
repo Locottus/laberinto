@@ -308,7 +308,7 @@ void recorrerLaberinto()
 {
     struct celda actual = obtenerValores(inicio);
     yaRecorrida(inicio);
-    int contador = 0; // FIX TO FINISH CONDITION
+    int contador = 0; 
     while (contador < filas * columnas && salida == 0)
     {
         adyacentes(actual.id);
