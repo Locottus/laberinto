@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
 
 struct celda
 {
@@ -187,8 +186,8 @@ struct celda obtenerValores(int id)
         {
             if (laberinto[i][j].id == id)
             {
-                printf("%d:", laberinto[i][j].id);
-                printf("%s ", laberinto[i][j].aperturas);
+                //printf("%d:", laberinto[i][j].id);
+                //printf("%s ", laberinto[i][j].aperturas);
                 encontrado = laberinto[i][j];
                 break;
             }
@@ -248,7 +247,7 @@ void yaRecorrida(int id)
 
 void adyacentes(int actual)
 {
-    printf("actual%d\n", actual);
+    //printf("actual%d\n", actual);
     buscaFC(actual);
     int fa = f;
     // int ca = c;
@@ -264,8 +263,8 @@ void adyacentes(int actual)
         if (fa == fant)
         {
             anterior = obtenerValores(ant);
-            printf("%s ", "obtengo anterior");
-            printf("%d\n", anterior.id);
+            //printf("%s ", "obtengo anterior");
+            //printf("%d\n", anterior.id);
         }
     }
     // obtengo arriba
@@ -274,8 +273,8 @@ void adyacentes(int actual)
     if (arr > 0)
     {
         arriba = obtenerValores(arr);
-        printf("%s ", "obtengo arriba");
-        printf("%d\n", arriba.id);
+        //printf("%s ", "obtengo arriba");
+        //printf("%d\n", arriba.id);
     }
 
     // obtengo siguiente
@@ -289,8 +288,8 @@ void adyacentes(int actual)
         if (fa == fsig)
         {
             siguiente = obtenerValores(sig);
-            printf("%s ", "obtengo siguiente");
-            printf("%d\n", siguiente.id);
+            //printf("%s ", "obtengo siguiente");
+            //printf("%d\n", siguiente.id);
         }
     }
 
@@ -300,8 +299,8 @@ void adyacentes(int actual)
     if (ab <= filas * columnas)
     {
         abajo = obtenerValores(ab);
-        printf("%s ", "obtengo abajo");
-        printf("%d\n", abajo.id);
+        //printf("%s ", "obtengo abajo");
+        //printf("%d\n", abajo.id);
     }
 }
 
@@ -319,7 +318,7 @@ void recorrerLaberinto()
         {
             if (existeLiteral(anterior.aperturas, 'C') == 1 && anterior.recorrido == 0)
             {
-                printf("%s\n", "actual->anterior");
+                //printf("%s\n", "actual->anterior");
                 yaRecorrida(anterior.id);
                 actual = obtenerValores(anterior.id);
                 fprintf(fp, "%02dC ", anterior.id);
@@ -331,7 +330,7 @@ void recorrerLaberinto()
         {
             if (existeLiteral(arriba.aperturas, 'D') == 1 && arriba.recorrido == 0)
             {
-                printf("%s\n", "actual->arriba");
+                //printf("%s\n", "actual->arriba");
                 yaRecorrida(arriba.id);
                 actual = obtenerValores(arriba.id);
                 fprintf(fp, "%02dD ", arriba.id);
@@ -341,10 +340,10 @@ void recorrerLaberinto()
         // revisar C
         if ((existeLiteral(actual.aperturas, 'C') == 1) && (siguiente.id != 0))
         {
-            printf("%s ", "actual->siguiente");
+            //printf("%s ", "actual->siguiente");
             if (existeLiteral(siguiente.aperturas, 'A') == 1 && siguiente.recorrido == 0)
             {
-                printf("%d \n", siguiente.id);
+                //printf("%d \n", siguiente.id);
                 yaRecorrida(siguiente.id);
                 actual = obtenerValores(siguiente.id);
                 fprintf(fp, "%02dA ", siguiente.id);
@@ -356,7 +355,7 @@ void recorrerLaberinto()
         {
             if (existeLiteral(abajo.aperturas, 'B') == 1 && abajo.recorrido == 0)
             {
-                printf("%s\n", "actual->abajo");
+                //printf("%s\n", "actual->abajo");
                 yaRecorrida(abajo.id);
                 actual = obtenerValores(abajo.id);
                 fprintf(fp, "%02dB ", abajo.id);
@@ -366,7 +365,7 @@ void recorrerLaberinto()
         if (fin == actual.id)
         {
             salida = 1;
-            printf("%s\n", "salida exitosa");
+            //printf("%s\n", "salida exitosa");
             fprintf(fp, "\nSalida Exitosa\n");
         }
 
@@ -375,7 +374,7 @@ void recorrerLaberinto()
 
     if (salida == 0)
     {
-        printf("%s\n", "salida inaccesible");
+        //printf("%s\n", "salida inaccesible");
         fprintf(fp, "\nSalida Inaccesible\n");
     }
 }
@@ -395,9 +394,9 @@ int main(void)
     leeArchivo();
     cargarArchivo();
 
-    print();
-    printf("posicion inicio: %d  \n", inicio);
-    printf("posicion fin: %d  \n", fin);
+    //print();
+    //printf("posicion inicio: %d  \n", inicio);
+    //printf("posicion fin: %d  \n", fin);
     recorrerLaberinto();
 
     /* free the memory we used for the buffer */
@@ -405,6 +404,6 @@ int main(void)
 
     // file close
     fclose(fp);
-    clrscr();
+
     return 0;
 }

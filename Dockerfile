@@ -6,6 +6,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install vim gcc git -y
 RUN apt-get install -y gcc-riscv64-linux-gnu
 RUN apt install gcc-riscv64-unknown-elf -y
 RUN apt-get install mingw-w64 -y
+
 #https://zoomadmin.com/HowToInstall/UbuntuPackage/gcc-riscv64-linux-gnu
 #run docker commands
 #docker build -t ubuntu-gcc .
