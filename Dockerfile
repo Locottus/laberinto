@@ -1,16 +1,17 @@
-FROM ubuntu:latest
+FROM ubuntu:22.10
 
 WORKDIR /risk-v
 
 RUN apt-get update && apt-get upgrade -y && apt-get install vim gcc git -y
+#RUN apt-get update && apt-get install vim gcc git -y
 RUN apt-get install -y gcc-riscv64-linux-gnu
 RUN apt install gcc-riscv64-unknown-elf -y
 RUN apt-get install mingw-w64 -y
 COPY . .
 #https://zoomadmin.com/HowToInstall/UbuntuPackage/gcc-riscv64-linux-gnu
 #run docker commands
-#docker build -t ubuntu-risk-utils .
-#docker run -it -v c:\angular\risk:/risk ubuntu-risk-utils bash
+#docker build -t ubuntu-risk-v-util .
+#docker run -it -v c:\angular\risk:/risk ubuntu-risk-v-util bash
 
 #run compiler commands
 # gcc -Wall lab.c  -o lab
