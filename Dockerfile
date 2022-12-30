@@ -20,13 +20,13 @@ COPY . .
 #riscv64-linux-gnu-gcc lab.c -o risc-v
 
 
-#pasos para desensamblar:
+#steps to disassemble:
 #1 create a c program to  executable eg: gcc -Wall lab.c  -o lab
 #2 convet the previous executable from previous step  "lab" to a risk executable risc-v with the following command: riscv64-linux-gnu-gcc lab.c -o risc-v
 #3 disassemble the risk-v executable with the following command:  riscv64-unknown-elf-objdump -d risc-v > lab.asm
 
 
-#compilar para windows
+# windows compilation
 #x86_64-w64-mingw32-g++ -o lab.exe lab.c
 #x86_64-w64-mingw32-g++      64bits use
 #i686-w64-mingw32-g++        32bits use
