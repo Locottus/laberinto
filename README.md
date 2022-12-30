@@ -1,10 +1,10 @@
 # laberinto
 #https://zoomadmin.com/HowToInstall/UbuntuPackage/gcc-riscv64-linux-gnu
 #run docker commands
-#docker build -t ubuntu-risk-utils .
+#docker build -t ubuntu-risk-v-util .
 
 #example on windows with volume pointing to c:\risk-v in windows file system
-#docker run -it -v c:\risk-v:/risk-v ubuntu-risk-utils bash
+#docker run -it -v c:\risk-v:/risk-v ubuntu-risk-v-util bash
 
 #run compiler commands
 # gcc -Wall lab.c  -o lab
