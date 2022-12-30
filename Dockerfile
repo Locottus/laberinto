@@ -1,16 +1,16 @@
-FROM ubuntu
+FROM ubuntu:latest
 
-WORKDIR /risk
+WORKDIR /risk-v
 
 RUN apt-get update && apt-get upgrade -y && apt-get install vim gcc git -y
 RUN apt-get install -y gcc-riscv64-linux-gnu
 RUN apt install gcc-riscv64-unknown-elf -y
 RUN apt-get install mingw-w64 -y
-
+COPY . .
 #https://zoomadmin.com/HowToInstall/UbuntuPackage/gcc-riscv64-linux-gnu
 #run docker commands
-#docker build -t ubuntu-gcc .
-#docker run -it -v c:\angular\risk:/risk ubuntu-gcc bash
+#docker build -t ubuntu-risk-utils .
+#docker run -it -v c:\angular\risk:/risk ubuntu-risk-utils bash
 
 #run compiler commands
 # gcc -Wall lab.c  -o lab
@@ -21,9 +21,9 @@ RUN apt-get install mingw-w64 -y
 
 
 #pasos para desensamblar:
-#1 convertis el codigo fuente c a ejecutable con el sig. comando: gcc -Wall lab.c  -o lab
-#2 convertis el ejecutable del paso anterior "lab" a risc-v con este comando: riscv64-linux-gnu-gcc lab.c -o risc-v
-#3 el ejecutable en formato risc-v lo desensamblas con el sig. comando:  riscv64-unknown-elf-objdump -d risc-v > lab.asm
+#1 create a c program to  executable eg: gcc -Wall lab.c  -o lab
+#2 convet the previous executable from previous step  "lab" to a risk executable risc-v with the following command: riscv64-linux-gnu-gcc lab.c -o risc-v
+#3 disassemble the risk-v executable with the following command:  riscv64-unknown-elf-objdump -d risc-v > lab.asm
 
 
 #compilar para windows
